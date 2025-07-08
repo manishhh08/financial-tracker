@@ -1,0 +1,16 @@
+{
+  "name": "ft-client",
+  "version": "1.0.0",
+  "description": "financial tracker client",
+  "main": "server.js",
+  "author": "manish",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.10.0",
+    "react": "^19.1.0",
+    "react-bootstrap": "^2.10.10",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.6.3",
+    "react-toastify": "^11.0.5"
+  }
+}
