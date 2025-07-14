@@ -31,10 +31,13 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haUBnbWFpbC5j
 
 {
    "type":"expense",
-   "description":"mai expense",
+   "description":"mai expense misc",
    "date":"12-10-2022",
-   "amount":4231
+   "amount":77777
 }
 ###
 GET {{apiUrl}}/transactions
 Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haUBnbWFpbC5jb20iLCJpYXQiOjE3NTI0NjkxNTUsImV4cCI6MTc1MjU1NTU1NX0.CuiyGHi53HbCEoXCdbxGfFrxAACeuEmTtLSOTZIot9w
+
+###
+DELETE {{apiUrl}}/delete/:id

@@ -8,6 +8,7 @@ import mongoConnection from "./config/mongoConfig.js";
 import { loginUser, registerUser } from "./controller/authControllers.js";
 import {
   createTranscations,
+  deleteTransaction,
   getTransactions,
 } from "./controller/transactionControllers.js";
 import { auth } from "./middleware/authMiddleware.js";
@@ -39,7 +40,8 @@ app.post("/api/v1/auth/login", loginUser);
 app.post("/api/v1/transactions", auth, createTranscations);
 //get a transaction
 app.get("/api/v1/transactions", auth, getTransactions);
-
+//delete a transaction
+app.delete("/api/v1/delete/:id", auth, deleteTransaction);
 //mongo connection
 mongoConnection()
   .then(() => {

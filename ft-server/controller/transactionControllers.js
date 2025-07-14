@@ -45,4 +45,19 @@ export const getTransactions = async (req, res) => {
 };
 
 //delete transaction api
+export const deleteTransaction = async (req, res) => {
+  try {
+    let deletedId = req.user._id;
+
+    return res.status(200).json({
+      status: true,
+      message: "Transaction delete succesfully",
+    });
+  } catch (err) {
+    return res.status(401).json({
+      status: false,
+      message: "Failed to retrieve information",
+    });
+  }
+};
 //delete multiple transaction api
