@@ -5,17 +5,16 @@ import dotenv from "dotenv";
 dotenv.config();
 import mongoConnection from "./config/mongoConfig.js";
 
+import { loginUser, registerUser } from "./controller/authControllers.js";
 const app = express();
 const PORT = 4000;
 
 app.use(cors());
 
 //request body
-
 app.use(express.json());
 
-//base get api
-
+//  routes
 app.get("/", (req, res) => {
   res.json({
     status: true,
@@ -23,6 +22,13 @@ app.get("/", (req, res) => {
   });
 });
 
+// auth routes
+//create user
+app.post("/api/v1/auth", registerUser);
+
+//login user
+app.post("/api/v1/auth/login", loginUser);
+//mongo connection
 mongoConnection()
   .then(() => {
     console.log("Mongo connection successful");
@@ -36,5 +42,6 @@ mongoConnection()
     });
   })
   .catch((err) => {
+    console.log(error.message);
     console.log("Mongo connection error");
   });

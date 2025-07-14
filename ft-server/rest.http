@@ -1,0 +1,26 @@
+@baseUrl= http://localhost:4000
+@apiUrl= {{baseUrl}}/api/v1
+#
+GET {{baseUrl}}
+###
+GET {{apiUrl}}
+
+###
+POST {{apiUrl}}/auth
+Content-Type: application/json
+ 
+ {
+    "username":"dented",
+    "email":"dented@gmail.com",
+    "password":"pg123"
+ }
+
+###
+POST {{apiUrl}}/auth/login
+Content-type:  application/json
+
+ {
+ "email":"test2@gmail.com",
+ "password":"test12"
+
+ }
