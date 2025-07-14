@@ -10,17 +10,31 @@ POST {{apiUrl}}/auth
 Content-Type: application/json
  
  {
-    "username":"dented",
-    "email":"dented@gmail.com",
-    "password":"pg123"
+    "username":"mai",
+    "email":"mai@gmail.com",
+    "password":"test"
  }
 
 ###
 POST {{apiUrl}}/auth/login
-Content-type:  application/json
+Content-Type: application/json
 
- {
- "email":"test2@gmail.com",
- "password":"test12"
+{
+ "email":"mai@gmail.com",
+ "password":"test"
+}
 
- }
+###
+ POST {{apiUrl}}/transactions
+Content-Type:  application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haUBnbWFpbC5jb20iLCJpYXQiOjE3NTI0NjkxNTUsImV4cCI6MTc1MjU1NTU1NX0.CuiyGHi53HbCEoXCdbxGfFrxAACeuEmTtLSOTZIot9w
+
+{
+   "type":"expense",
+   "description":"mai expense",
+   "date":"12-10-2022",
+   "amount":4231
+}
+###
+GET {{apiUrl}}/transactions
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haUBnbWFpbC5jb20iLCJpYXQiOjE3NTI0NjkxNTUsImV4cCI6MTc1MjU1NTU1NX0.CuiyGHi53HbCEoXCdbxGfFrxAACeuEmTtLSOTZIot9w

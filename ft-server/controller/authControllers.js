@@ -15,6 +15,7 @@ export const registerUser = async (req, res) => {
     return res.status(201).json({
       status: true,
       message: "user created",
+      newUser,
     });
   } catch (err) {
     console.log(err.message);

@@ -6,6 +6,11 @@ dotenv.config();
 import mongoConnection from "./config/mongoConfig.js";
 
 import { loginUser, registerUser } from "./controller/authControllers.js";
+import {
+  createTranscations,
+  getTransactions,
+} from "./controller/transactionControllers.js";
+import { auth } from "./middleware/authMiddleware.js";
 const app = express();
 const PORT = 4000;
 
@@ -28,6 +33,13 @@ app.post("/api/v1/auth", registerUser);
 
 //login user
 app.post("/api/v1/auth/login", loginUser);
+
+//transaction
+//create a transaction
+app.post("/api/v1/transactions", auth, createTranscations);
+//get a transaction
+app.get("/api/v1/transactions", auth, getTransactions);
+
 //mongo connection
 mongoConnection()
   .then(() => {
