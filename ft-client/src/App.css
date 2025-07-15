@@ -1,5 +1,8 @@
 .wrapper {
-  height: 700px;
-  width: 100%;
-  background-color: red;
+  min-height: 100vh;
+  background-color: black;
+  color: white;
+}
+.main {
+  min-height: calc(100vh - 200px);
 }
