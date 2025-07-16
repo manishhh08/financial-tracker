@@ -27,17 +27,20 @@ Content-Type: application/json
 ###
  POST {{apiUrl}}/transactions
 Content-Type:  application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haUBnbWFpbC5jb20iLCJpYXQiOjE3NTI0NjkxNTUsImV4cCI6MTc1MjU1NTU1NX0.CuiyGHi53HbCEoXCdbxGfFrxAACeuEmTtLSOTZIot9w
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haUBnbWFpbC5jb20iLCJpYXQiOjE3NTI2NzI5OTUsImV4cCI6MTc1Mjc1OTM5NX0.wJbRg16qSW0U3sxsSCY3u2xIsm1cdFOG9adYgRpBrRM
 
 {
    "type":"expense",
-   "description":"mai expense misc",
+   "description":"mai expense car",
    "date":"12-10-2022",
-   "amount":77777
+   "amount":24000
 }
 ###
 GET {{apiUrl}}/transactions
-Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haUBnbWFpbC5jb20iLCJpYXQiOjE3NTI0NjkxNTUsImV4cCI6MTc1MjU1NTU1NX0.CuiyGHi53HbCEoXCdbxGfFrxAACeuEmTtLSOTZIot9w
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haUBnbWFpbC5jb20iLCJpYXQiOjE3NTI2NzI5OTUsImV4cCI6MTc1Mjc1OTM5NX0.wJbRg16qSW0U3sxsSCY3u2xIsm1cdFOG9adYgRpBrRM
+
 
 ###
-DELETE {{apiUrl}}/delete/:id
+DELETE {{apiUrl}}/delete/6877ab241fa0bac89463450f
+Content-Type: application/json
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haUBnbWFpbC5jb20iLCJpYXQiOjE3NTI2NzI5OTUsImV4cCI6MTc1Mjc1OTM5NX0.wJbRg16qSW0U3sxsSCY3u2xIsm1cdFOG9adYgRpBrRM
