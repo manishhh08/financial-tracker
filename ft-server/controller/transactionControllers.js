@@ -73,4 +73,33 @@ export const deleteTransaction = async (req, res) => {
     });
   }
 };
+
 //delete multiple transaction api
+export const deleteMultipleTransaction = async (req, res) => {
+  try {
+    let deleteTransacationsId = req.params.idsToDelete;
+    const multipleIds = idsToDeleteParam.split(",");
+
+    const deleteMultipleTransaction = await deleteTransactionByUserId(
+      deleteTransacationsId,
+      multipleIds
+    );
+
+    if (deleteMultipleTransaction) {
+      return res.status(200).json({
+        status: true,
+        message: "Transaction delete succesfully",
+      });
+    } else {
+      return res.status(404).json({
+        status: false,
+        message: "Transaction not found",
+      });
+    }
+  } catch (err) {
+    return res.status(401).json({
+      status: false,
+      message: "Failed to retrive information",
+    });
+  }
+};
