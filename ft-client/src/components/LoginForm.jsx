@@ -41,6 +41,7 @@ const LoginForm = () => {
     if (data.status) {
       toast.success(data.message);
       navigate("/dashboard");
+      localStorage.setItem("accessToken", data.accessToken);
     } else {
       toast.error(data.message);
     }
