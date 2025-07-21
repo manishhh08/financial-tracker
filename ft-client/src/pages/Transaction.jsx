@@ -1,10 +1,27 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { getTransation } from "../utils/axiosHelper";
-import { Button, Form, Table } from "react-bootstrap";
+import { deleteTransaction, getTransation } from "../utils/axiosHelper";
+import TransactionForm from "../components/TransactionForm";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Modal,
+  Row,
+  Table,
+} from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const Transaction = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const [total, setTotal] = useState(0);
+
   const [transactions, setTransactions] = useState([]);
-  const [selectedOption, setSelectedOption] = useState("");
   const fetchTransaction = async () => {
     // fetch the token from localstorage
 
@@ -12,74 +29,112 @@ const Transaction = () => {
 
     console.log(data);
     setTransactions(data.transactions);
+
+    let tempTotal = data.transactions.reduce((acc, item) => {
+      return item.type == "income"
+        ? acc + parseFloat(item.amount)
+        : acc - parseFloat(item.amount);
+    }, 0);
+
+    console.log(tempTotal);
+    setTotal(tempTotal);
   };
 
   useEffect(() => {
     fetchTransaction();
   }, []);
 
-  //when selected option
-  const handleOnChange = (e) => {
-    setSelectedOption(e.target.value);
+  const handleOnDelete = async (id) => {
+    alert(id);
+    // delete axios
+    let data = await deleteTransaction(id);
+    if (data.status) {
+      toast.success(data.message);
+      fetchTransaction();
+    } else {
+      toast.error(data.message);
+    }
   };
 
   return (
-    <div>
-      Transaction
-      {/* <ul>
-        {transactions.map((t) => (
-          <li>
-            {" "}
-            <h2>{t.description}</h2>
-          </li>
-        ))}
-      </ul> */}
-      {/* table to display data */}
-      <Table striped bordered hover variant="dark">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Type</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((t, index) => (
-            <tr>
-              <td>{index + 1}</td>
-              <td>{t.createdAt.split("T")[0]}</td>
-              <td>{t.description}</td>
-              <td>{t.type}</td>
-              <td>{t.amount}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      <hr />
-      <Form>
-        <Form.Group className="mb-3" controlId="formAddTransaction">
-          <Form.Label>Date</Form.Label>
-          <Form.Control type="date" />
-          <Form.Label>Select the type:</Form.Label>
-          <Form.Select value={selectedOption} onChange={handleOnChange}>
-            <option value="income">Income</option>
-            <option value="expense">Expense</option>
-          </Form.Select>
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            type="description"
-            placeholder="Enter transaction description"
+    <Container className="p-5">
+      <Row className="bg-dark p-5 rounded-5">
+        <Col>
+          <div>
+            <h1>Transaction</h1>{" "}
+            <button className="btn btn-primary" onClick={handleShow}>
+              Add
+            </button>
+            <hr />
+            <Table hover variant="dark">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Date</th>
+                  <th>Title</th>
+                  <th>Out</th>
+                  <th>In</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((t, index) => {
+                  return (
+                    <tr>
+                      <td>{index + 1}</td>
+                      <td>{t.date.split("T")[0]}</td>
+                      <td>{t.description}</td>
+                      <td className="text-danger">
+                        {t.type == "expense" ? "$" + t.amount : ""}
+                      </td>
+                      <td className="text-success">
+                        {t.type == "income" ? "$" + t.amount : ""}
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => {
+                            handleOnDelete(t._id);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>Total : {total}</td>
+                </tr>
+              </tbody>
+            </Table>
+          </div>
+        </Col>
+      </Row>
+
+      {/* Modal */}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Transaction</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <TransactionForm
+            fetchTransaction={fetchTransaction}
+            handleClose={handleClose}
           />
-          <Form.Label>Amount</Form.Label>
-          <Form.Control type="number" placeholder="Enter amount" />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
-    </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </Container>
   );
 };
 

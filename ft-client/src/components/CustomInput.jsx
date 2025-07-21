@@ -1,7 +1,15 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
-const CustomInput = ({ id, label, type, name, placeholder, ...rest }) => {
+const CustomInput = ({
+  id,
+  label,
+  type,
+  name,
+  placeholder,
+  value,
+  onChange,
+}) => {
   // let id = "id";
   // let label = "label";
   // let type = "email";
@@ -15,7 +23,8 @@ const CustomInput = ({ id, label, type, name, placeholder, ...rest }) => {
         type={type}
         name={name}
         placeholder={placeholder}
-        {...rest}
+        value={value}
+        onChange={onChange}
       />
     </Form.Group>
   );

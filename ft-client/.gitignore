@@ -12,6 +12,7 @@ node_modules
 dist
 dist-ssr
 *.local
+transaction-copy.jsx
 
 # Editor directories and files
 .vscode/*

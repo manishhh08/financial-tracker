@@ -56,3 +56,22 @@ export const getTransation = async () => {
     isPrivate: true,
   });
 };
+
+//get transaction
+export const createTransaction = async (obj) => {
+  return apiProcessor({
+    method: "get",
+    url: `${apiUrl}/transactions`,
+    data: obj,
+    isPrivate: true,
+  });
+};
+
+//delete transacation
+export const deleteTransaction = async (id) => {
+  return apiProcessor({
+    method: "delete",
+    url: `${apiUrl}/transactions/${id}`,
+    isPrivate: true,
+  });
+};
