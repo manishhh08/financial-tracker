@@ -41,7 +41,31 @@ app.post("/api/v1/transactions", auth, createTranscations);
 //get a transaction
 app.get("/api/v1/transactions", auth, getTransactions);
 //delete a transaction
-app.delete("/api/v1/delete/:id", auth, deleteTransaction);
+app.delete("/api/v1/transactions/:id", auth, deleteTransaction);
+
+app.get("/api/v1/dahsboard", (req, res) => {
+  try {
+  } catch (err) {
+    return res.json({
+      status: false,
+      message: "Dashboard metrics not found",
+    });
+  }
+  return res.json({
+    status: true,
+    message: "dashboard metrics",
+    metrics: {
+      income: 100,
+      expense: 3000,
+      balance: 100 - 3000,
+      lastTransaction: {
+        description: "grocery",
+        amount: 100,
+        type: "income",
+      },
+    },
+  });
+});
 //mongo connection
 mongoConnection()
   .then(() => {

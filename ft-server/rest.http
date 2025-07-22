@@ -20,26 +20,32 @@ POST {{apiUrl}}/auth/login
 Content-Type: application/json
 
 {
- "email":"mai1@gmail.com",
- "password":"test"
+ "email":"user@gmail.com",
+ "password":"1234"
 }
 
 ###
  POST {{apiUrl}}/transactions
 Content-Type:  application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haTFAZ21haWwuY29tIiwiaWF0IjoxNzUyNzU3NDI2LCJleHAiOjE3NTI4NDM4MjZ9.z05v2-2L1z6YkmRkLAo6ptZoecehRUkQHTelnMEwcUw 
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwiaWF0IjoxNzUzMTA0MTk1LCJleHAiOjE3NTMxOTA1OTV9.GwVvfOq8dErzrVf-dlcwCxkePERBkU6p1qXDpnVuUxo
+
 {
-   "type":"expense",
-   "description":"mai expense cdasd",
+   "type":"income",
+   "description":"user big income",
    "date":"12-10-2022",
-   "amount":240001
+   "amount":4220
 }
 ###
 GET {{apiUrl}}/transactions
-Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haUBnbWFpbC5jb20iLCJpYXQiOjE3NTI2NzI5OTUsImV4cCI6MTc1Mjc1OTM5NX0.wJbRg16qSW0U3sxsSCY3u2xIsm1cdFOG9adYgRpBrRM
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwiaWF0IjoxNzUzMTA0MTk1LCJleHAiOjE3NTMxOTA1OTV9.GwVvfOq8dErzrVf-dlcwCxkePERBkU6p1qXDpnVuUxo
 
 
 ###
 DELETE {{apiUrl}}/delete/6877ab241fa0bac89463450f
 Content-Type: application/json
 Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haUBnbWFpbC5jb20iLCJpYXQiOjE3NTI2NzI5OTUsImV4cCI6MTc1Mjc1OTM5NX0.wJbRg16qSW0U3sxsSCY3u2xIsm1cdFOG9adYgRpBrRM
+
+
+###
+GET {{apiUrl}}/dashboard
+Authorization: 

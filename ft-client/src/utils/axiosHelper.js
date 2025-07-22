@@ -1,5 +1,5 @@
 import axios from "axios";
-const apiUrl = "http://localhost:4000/api/v1";
+const apiUrl = import.meta.env.VITE_APP_API_URL + "/api/v1";
 
 // axios helper
 const apiProcessor = async ({ method, data, url, isPrivate }) => {
