@@ -60,7 +60,7 @@ export const getTransation = async () => {
 //get transaction
 export const createTransaction = async (obj) => {
   return apiProcessor({
-    method: "get",
+    method: "post",
     url: `${apiUrl}/transactions`,
     data: obj,
     isPrivate: true,

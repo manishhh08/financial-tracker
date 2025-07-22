@@ -7,6 +7,7 @@ import Transaction from "./pages/Transaction";
 import Login from "./pages/Login";
 import DefaultLayout from "./components/layout/DefaultLayout";
 import { ToastContainer } from "react-toastify";
+import Auth from "./auth/Auth";
 
 function App() {
   return (
@@ -19,8 +20,22 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             {/* private */}
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="transaction" element={<Transaction />} />
+            <Route
+              path="dashboard"
+              element={
+                <Auth>
+                  <Dashboard />
+                </Auth>
+              }
+            />
+            <Route
+              path="transaction"
+              element={
+                <Auth>
+                  <Transaction />
+                </Auth>
+              }
+            />
           </Route>
         </Routes>
       </div>

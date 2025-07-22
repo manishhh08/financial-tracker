@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import CustomInput from "./CustomInput";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { loginUser } from "../utils/axiosHelper";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
+import { useUser } from "../context/userContext";
 
 const LoginForm = () => {
   let inputFields = [
@@ -29,7 +31,9 @@ const LoginForm = () => {
     password: "",
   };
   const [savedDetails, setSavedDetails] = useState(initialDetails);
+  const { setUser, user } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +44,10 @@ const LoginForm = () => {
 
     if (data.status) {
       toast.success(data.message);
-      navigate("/dashboard");
+      // navigate("/dashboard");
+
+      //when logged in
+      setUser(data.user);
       localStorage.setItem("accessToken", data.accessToken);
     } else {
       toast.error(data.message);
@@ -52,6 +59,12 @@ const LoginForm = () => {
     tempLogin[e.target.name] = e.target.value;
     setSavedDetails(tempLogin);
   };
+
+  const pastLocation = location?.state?.from?.pathname || "/transaction";
+
+  useEffect(() => {
+    user?._id && navigate(pastLocation);
+  }, [user?._id]);
   return (
     <div>
       <h1>Login Here</h1>

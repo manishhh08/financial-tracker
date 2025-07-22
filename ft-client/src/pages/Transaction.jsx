@@ -12,8 +12,10 @@ import {
   Table,
 } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { useUser } from "../context/userContext";
 
 const Transaction = () => {
+  const { testFunction } = useUser();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -28,6 +30,7 @@ const Transaction = () => {
     let data = await getTransation();
 
     console.log(data);
+    console.log(testFunction());
     setTransactions(data.transactions);
 
     let tempTotal = data.transactions.reduce((acc, item) => {
@@ -36,7 +39,7 @@ const Transaction = () => {
         : acc - parseFloat(item.amount);
     }, 0);
 
-    console.log(tempTotal);
+    //console.log(tempTotal);
     setTotal(tempTotal);
   };
 
