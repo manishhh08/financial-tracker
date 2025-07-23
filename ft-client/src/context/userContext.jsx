@@ -1,5 +1,6 @@
 import React, { children } from "react";
 import { createContext, useContext, useState } from "react";
+import { getUserDetail } from "../utils/axiosHelper";
 
 //create context
 const UserContext = createContext();
@@ -11,19 +12,20 @@ export const UserProvider = ({ children }) => {
   const testFunction = () => {
     return "Test function";
   };
-  const testFunction2 = () => {
-    return "test function 2";
-  };
-  const dashboardMessage = () => {
-    return "this is dashboard context message";
-  };
 
+  //auto login feature
+  const autoLogin = async () => {
+    let data = await getUserDetail();
+
+    if (data.status) {
+      setUser(data.user);
+    }
+  };
   let sharedData = {
     user,
     setUser,
     testFunction,
-    testFunction2,
-    dashboardMessage,
+    autoLogin,
   };
 
   //return what needs to be saved

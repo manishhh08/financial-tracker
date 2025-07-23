@@ -75,3 +75,21 @@ export const deleteTransaction = async (id) => {
     isPrivate: true,
   });
 };
+
+//get user detail
+export const getUserDetail = async () => {
+  return apiProcessor({
+    method: "get",
+    url: `${apiUrl}/auth/user`,
+    isPrivate: true,
+  });
+};
+
+//get information for dashboard
+export const getDashboardInformation = async () => {
+  return apiProcessor({
+    method: "get",
+    url: `${apiUrl}/dashboard`,
+    isPrivate: true,
+  });
+};
