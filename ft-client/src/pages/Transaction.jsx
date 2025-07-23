@@ -13,10 +13,18 @@ import {
 } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useUser } from "../context/userContext";
+import useForm from "../hooks/useForm";
 
 const Transaction = () => {
-  const { testFunction } = useUser();
+  const { testFunction, user } = useUser();
   const [show, setShow] = useState(false);
+
+  const { form, setForm, handleOnChange } = useForm({
+    type: "income",
+    description: "",
+    amount: 0,
+    date: "",
+  });
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -30,7 +38,7 @@ const Transaction = () => {
     let data = await getTransation();
 
     console.log(data);
-    console.log(testFunction());
+    //console.log(testFunction());
     setTransactions(data.transactions);
 
     let tempTotal = data.transactions.reduce((acc, item) => {
@@ -64,8 +72,21 @@ const Transaction = () => {
       <Row className="bg-dark p-5 rounded-5">
         <Col>
           <div>
-            <h1>Transaction</h1>{" "}
-            <button className="btn btn-primary" onClick={handleShow}>
+            <h1>Transaction</h1>
+            <h3>{user?.username}</h3>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                setForm({
+                  type: "Income",
+                  description: "",
+                  amount: 0,
+                  date: "",
+                });
+
+                handleShow();
+              }}
+            >
               Add
             </button>
             <hr />
@@ -102,6 +123,15 @@ const Transaction = () => {
                         >
                           Delete
                         </button>
+                        <button
+                          className="btn btn-warning"
+                          onClick={() => {
+                            setForm(t);
+                            handleShow();
+                          }}
+                        >
+                          Update
+                        </button>
                       </td>
                     </tr>
                   );
@@ -123,10 +153,16 @@ const Transaction = () => {
       {/* Modal */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Transaction</Modal.Title>
+          <Modal.Title>
+            {" "}
+            {form?._id ? "Update" : "Add"} Add Transaction
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <TransactionForm
+            form={form}
+            setForm={setForm}
+            handleOnChange={handleOnChange}
             fetchTransaction={fetchTransaction}
             handleClose={handleClose}
           />

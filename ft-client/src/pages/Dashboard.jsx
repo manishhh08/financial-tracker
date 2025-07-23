@@ -6,12 +6,12 @@ import { useUser } from "../context/userContext";
 const Dashboard = () => {
   //hooks
   const [transaction, setTransaction] = useState([]);
-  const { dashboardMessage } = useUser();
+  // const { dashboardMessage } = useUser();
   //call using api
   const receiveTransaction = async () => {
     let data = await getTransation();
     setTransaction(data.transaction);
-    console.log(dashboardMessage());
+    // console.log(dashboardMessage());
   };
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Dashboard = () => {
         <Col>
           Balance
           <div>
-            <h3>The available balance is: {dashboardMessage()}</h3>
+            <h3>The available balance is: </h3>
           </div>
         </Col>
         <Col>
