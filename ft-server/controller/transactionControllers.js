@@ -2,6 +2,7 @@ import {
   deleteTransactionByUserId,
   getTransactionsByUserId,
   insertTranscation,
+  updateTranscationByUserId,
 } from "../models/transactions/transactionModel.js";
 //create new transactions
 export const createTranscations = async (req, res) => {
@@ -100,6 +101,33 @@ export const deleteMultipleTransaction = async (req, res) => {
     return res.status(401).json({
       status: false,
       message: "Failed to retrive information",
+    });
+  }
+};
+
+//update transaction api
+export const updateTransaction = async (req, res) => {
+  try {
+    let userId = req.user._id;
+
+    //retrieve transaction id
+    let tid = req.params.id;
+    let updateData = req.body;
+
+    let updatedTransaction = await updateTranscationByUserId(
+      tid,
+      userId,
+      updateData
+    );
+    return res.json({
+      status: true,
+      message: "Transaction Update Successful",
+      transaction: updatedTransaction,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: false,
+      message: "Failed to update transaction",
     });
   }
 };

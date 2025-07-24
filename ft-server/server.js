@@ -10,8 +10,10 @@ import {
   createTranscations,
   deleteTransaction,
   getTransactions,
+  updateTransaction,
 } from "./controller/transactionControllers.js";
 import { auth } from "./middleware/authMiddleware.js";
+import { updateTranscationByUserId } from "./models/transactions/transactionModel.js";
 const app = express();
 const PORT = 4000;
 
@@ -20,7 +22,7 @@ app.use(cors());
 //request body
 app.use(express.json());
 
-//  routes
+//routes
 app.get("/", (req, res) => {
   res.json({
     status: true,
@@ -35,37 +37,62 @@ app.post("/api/v1/auth", registerUser);
 //login user
 app.post("/api/v1/auth/login", loginUser);
 
+//get user detail
+app.get("/api/v1/auth/user", auth, (req, res) => {
+  return res.json({
+    status: true,
+    message: "User Detail Retrieved!!!",
+    user: req.user,
+  });
+});
+
+//dashboard api
+app.get("/api/v1/dashboard", auth, async (req, res) => {
+  let userId = req.user._id;
+
+  let transactions = await getTransactionsByUserId(userId);
+
+  console.log(">>>>>", transactions);
+
+  transactions.sort((a, b) => b.date - a.date);
+
+  let income = transactions.reduce((acc, item) => {
+    return item.type === "income" ? acc + item.amount : acc;
+  }, 0);
+
+  let expense = transactions.reduce((acc, item) => {
+    return item.type === "expense" ? acc + item.amount : acc;
+  }, 0);
+
+  let balance = income - expense;
+
+  let responseObject = {
+    status: true,
+    message: "Metrics",
+    metrics: {
+      income,
+      expense,
+      balance,
+      transaction_no: transactions.length,
+      last_transaction: transactions[0],
+    },
+  };
+
+  return res.json(responseObject);
+});
+
 //transaction
 //create a transaction
 app.post("/api/v1/transactions", auth, createTranscations);
+
 //get a transaction
 app.get("/api/v1/transactions", auth, getTransactions);
+
 //delete a transaction
 app.delete("/api/v1/transactions/:id", auth, deleteTransaction);
 
-app.get("/api/v1/dahsboard", (req, res) => {
-  try {
-  } catch (err) {
-    return res.json({
-      status: false,
-      message: "Dashboard metrics not found",
-    });
-  }
-  return res.json({
-    status: true,
-    message: "dashboard metrics",
-    metrics: {
-      income: 100,
-      expense: 3000,
-      balance: 100 - 3000,
-      lastTransaction: {
-        description: "grocery",
-        amount: 100,
-        type: "income",
-      },
-    },
-  });
-});
+//update a transaction
+app.patch("/api/v1/transactions/:id", auth, updateTransaction);
 //mongo connection
 mongoConnection()
   .then(() => {
@@ -80,6 +107,6 @@ mongoConnection()
     });
   })
   .catch((err) => {
-    console.log(error.message);
+    console.log(err.message);
     console.log("Mongo connection error");
   });

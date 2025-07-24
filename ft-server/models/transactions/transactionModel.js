@@ -25,3 +25,13 @@ export const deleteTransactionsByUserId = (idsToDelte, userId) => {
     userId: userId,
   });
 };
+
+//update transaction
+export const updateTranscationByUserId = (tid, userId, tObject) => {
+  return (
+    Transaction.findOneAndUpdate({ _id: tid, userId }, tObject),
+    {
+      new: true,
+    }
+  );
+};
