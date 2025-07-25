@@ -56,7 +56,7 @@ const Transaction = () => {
   }, []);
 
   const handleOnDelete = async (id) => {
-    alert(id);
+    //alert(id);
     // delete axios
     let data = await deleteTransaction(id);
     if (data.status) {
@@ -154,7 +154,6 @@ const Transaction = () => {
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
-            {" "}
             {form?._id ? "Update" : "Add"} Add Transaction
           </Modal.Title>
         </Modal.Header>

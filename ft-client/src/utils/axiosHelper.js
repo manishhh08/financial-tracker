@@ -57,7 +57,7 @@ export const getTransation = async () => {
   });
 };
 
-//get transaction
+//create transaction
 export const createTransaction = async (obj) => {
   return apiProcessor({
     method: "post",
@@ -76,6 +76,15 @@ export const deleteTransaction = async (id) => {
   });
 };
 
+//update transaction
+export const updateTransaction = async (obj, id) => {
+  return apiProcessor({
+    method: "patch",
+    url: `${apiUrl}/transactions/${id}`,
+    data: obj,
+    isPrivate: true,
+  });
+};
 //get user detail
 export const getUserDetail = async () => {
   return apiProcessor({
