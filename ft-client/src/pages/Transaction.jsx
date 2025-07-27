@@ -106,7 +106,15 @@ const Transaction = () => {
                   return (
                     <tr>
                       <td>{index + 1}</td>
-                      <td>{t.date.split("T")[0]}</td>
+                      {/* <td>{t.date.split("T")[0]}</td> */}
+                      <td>
+                        {(() => {
+                          const [year, month, day] = t.date
+                            .split("T")[0]
+                            .split("-");
+                          return `${day}/${month}/${year}`;
+                        })()}
+                      </td>
                       <td>{t.description}</td>
                       <td className="text-danger">
                         {t.type == "expense" ? "$" + t.amount : ""}

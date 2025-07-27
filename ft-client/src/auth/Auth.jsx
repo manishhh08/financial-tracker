@@ -3,8 +3,9 @@ import { useUser } from "../context/userContext";
 import { Navigate, useLocation } from "react-router-dom";
 
 const Auth = ({ children }) => {
-  const { user } = useUser();
   const location = useLocation();
+
+  const { user } = useUser();
 
   return (
     <>
