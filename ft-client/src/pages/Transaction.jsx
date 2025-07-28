@@ -137,7 +137,7 @@ const Transaction = () => {
                         <Form.Check value={t._id} onClick={handleOnSelect} />
                       </td>
                       <td>{index + 1}</td>
-                      <td>{t.date.split("T")[0]}</td>
+                      <td>{t.updatedAt.slice(0, 10)}</td>
                       {/* <td>
                         {(() => {
                           const [year, month, day] = t.date
