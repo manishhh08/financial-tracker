@@ -69,7 +69,7 @@ export const loginUser = async (req, res) => {
     } else {
       return res.status(401).json({
         status: false,
-        message: "User not found",
+        message: "Combination of email or password is incorrect",
       });
     }
   } catch (err) {

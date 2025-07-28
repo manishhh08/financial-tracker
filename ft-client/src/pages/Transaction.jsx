@@ -19,6 +19,8 @@ const Transaction = () => {
   const { testFunction, user } = useUser();
   const [show, setShow] = useState(false);
 
+  const [idsToDelete, setIdsToDelete] = useState([]);
+
   const { form, setForm, handleOnChange } = useForm({
     type: "income",
     description: "",
@@ -67,13 +69,38 @@ const Transaction = () => {
     }
   };
 
+  //const handleOnSelect = (checked, id) => {
+  //   let tempIds = [...idsToDelete];
+  //   console.log(checked, id);
+  //   if (checked) {
+  //     // Check for the duplicate ids
+  //     tempIds.push(id);
+  //     setIdsToDelete(tempIds);
+  //   } else {
+  //     // Remove the ids from the array
+  //     tempIds = tempIds.filter((ti) => ti != id);
+  //     setIdsToDelete(tempIds);
+  //   }
+  // };
+
+  const handleOnSelect = (e) => {
+    const { checked, value } = e.target;
+
+    if (checked) {
+      //check duplicate id
+      !idsToDelete.includes(value) && setIdsToDelete([...idsToDelete, value]);
+    } else {
+      //remove id from array
+      setIdsToDelete(idsToDelete.filter((id) => id !== value));
+    }
+  };
   return (
     <Container className="p-5">
       <Row className="bg-dark p-5 rounded-5">
         <Col>
           <div>
             <h1>Transaction</h1>
-            <h3>{user?.username}</h3>
+            <h3>Welcome {user?.username}</h3>
             <button
               className="btn btn-primary"
               onClick={() => {
@@ -93,6 +120,7 @@ const Transaction = () => {
             <Table hover variant="dark">
               <thead>
                 <tr>
+                  <th>Check</th>
                   <th>#</th>
                   <th>Date</th>
                   <th>Title</th>
@@ -105,16 +133,19 @@ const Transaction = () => {
                 {transactions.map((t, index) => {
                   return (
                     <tr>
-                      <td>{index + 1}</td>
-                      {/* <td>{t.date.split("T")[0]}</td> */}
                       <td>
+                        <Form.Check value={t._id} onClick={handleOnSelect} />
+                      </td>
+                      <td>{index + 1}</td>
+                      <td>{t.date.split("T")[0]}</td>
+                      {/* <td>
                         {(() => {
                           const [year, month, day] = t.date
                             .split("T")[0]
                             .split("-");
                           return `${day}/${month}/${year}`;
                         })()}
-                      </td>
+                      </td> */}
                       <td>{t.description}</td>
                       <td className="text-danger">
                         {t.type == "expense" ? "$" + t.amount : ""}

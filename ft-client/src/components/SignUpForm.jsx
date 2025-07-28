@@ -55,7 +55,7 @@ const SignupForm = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    alert("form submitted");
+    //alert("form submitted");
 
     //make create user post req from axios
     if (form.password != form.cpassword) {

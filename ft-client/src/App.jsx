@@ -8,8 +8,16 @@ import Login from "./pages/Login";
 import DefaultLayout from "./components/layout/DefaultLayout";
 import { ToastContainer } from "react-toastify";
 import Auth from "./auth/Auth";
+import { useUser } from "./context/userContext";
+import { useEffect } from "react";
 
 function App() {
+  const { setUser, autoLogin } = useUser();
+
+  useEffect(() => {
+    autoLogin();
+  }, []);
+
   return (
     <>
       <div className="wrapper">

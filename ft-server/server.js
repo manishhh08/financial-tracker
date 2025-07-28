@@ -13,7 +13,12 @@ import {
   updateTransaction,
 } from "./controller/transactionControllers.js";
 import { auth } from "./middleware/authMiddleware.js";
-import { updateTranscationByUserId } from "./models/transactions/transactionModel.js";
+import {
+  getTransactionsByUserId,
+  updateTranscationByUserId,
+} from "./models/transactions/transactionModel.js";
+
+//start backend
 const app = express();
 const PORT = 4000;
 
@@ -52,7 +57,7 @@ app.get("/api/v1/dashboard", auth, async (req, res) => {
 
   let transactions = await getTransactionsByUserId(userId);
 
-  console.log(">>>>>", transactions);
+  //console.log(">>>>>", transactions);
 
   transactions.sort((a, b) => b.date - a.date);
 

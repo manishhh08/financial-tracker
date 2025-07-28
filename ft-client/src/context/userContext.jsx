@@ -16,6 +16,7 @@ export const UserProvider = ({ children }) => {
   //auto login feature
   const autoLogin = async () => {
     let data = await getUserDetail();
+    console.log(data);
 
     if (data.status) {
       setUser(data.user);
