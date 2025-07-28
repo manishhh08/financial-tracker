@@ -17,6 +17,7 @@ import useForm from "../hooks/useForm";
 
 const Transaction = () => {
   const { testFunction, user } = useUser();
+
   const [show, setShow] = useState(false);
 
   const [idsToDelete, setIdsToDelete] = useState([]);
@@ -57,10 +58,13 @@ const Transaction = () => {
     fetchTransaction();
   }, []);
 
-  const handleOnDelete = async (id) => {
-    //alert(id);
+  const handleOnDelete = async (id, isMany) => {
+    if (!window.confirm("Are you sure you want to delete this transaction?"))
+      return;
+
+    const toDeletData = isMany ? idsToDelete : [id];
     // delete axios
-    let data = await deleteTransaction(id);
+    let data = await deleteTransaction(toDeletData);
     if (data.status) {
       toast.success(data.message);
       fetchTransaction();
@@ -68,7 +72,6 @@ const Transaction = () => {
       toast.error(data.message);
     }
   };
-
   //const handleOnSelect = (checked, id) => {
   //   let tempIds = [...idsToDelete];
   //   console.log(checked, id);
@@ -85,10 +88,19 @@ const Transaction = () => {
 
   const handleOnSelect = (e) => {
     const { checked, value } = e.target;
+    //console.log(checked, value);
+    // handle select all checkbox
+    if (value === "all") {
+      checked
+        ? setIdsToDelete(transactions.map((t) => t._id))
+        : setIdsToDelete([]);
+      return;
+    }
 
     if (checked) {
       //check duplicate id
-      !idsToDelete.includes(value) && setIdsToDelete([...idsToDelete, value]);
+      // !idsToDelete.includes(value) &&
+      setIdsToDelete([...idsToDelete, value]);
     } else {
       //remove id from array
       setIdsToDelete(idsToDelete.filter((id) => id !== value));
@@ -117,6 +129,20 @@ const Transaction = () => {
               Add
             </button>
             <hr />
+            <div>
+              <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check
+                  type="checkbox"
+                  value="all"
+                  label="Select/Unselect all"
+                  onChange={handleOnSelect}
+                  checked={
+                    transactions.length === idsToDelete.length &&
+                    transactions.length > 0
+                  }
+                />
+              </Form.Group>
+            </div>
             <Table hover variant="dark">
               <thead>
                 <tr>
@@ -133,8 +159,16 @@ const Transaction = () => {
                 {transactions.map((t, index) => {
                   return (
                     <tr>
-                      <td>
+                      {/* <td>
                         <Form.Check value={t._id} onClick={handleOnSelect} />
+                      </td> */}
+                      <td>
+                        <Form.Check
+                          type="checkbox"
+                          value={t._id}
+                          onChange={handleOnSelect}
+                          checked={idsToDelete.includes(t._id)}
+                        />
                       </td>
                       <td>{index + 1}</td>
                       <td>{t.updatedAt.slice(0, 10)}</td>
@@ -176,15 +210,26 @@ const Transaction = () => {
                   );
                 })}
                 <tr>
+                  {/* <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td></td>
-                  <td></td>
+                  <td></td> */}
+                  <td colSpan={6}></td>
                   <td>Total : {total}</td>
                 </tr>
               </tbody>
             </Table>
+            {idsToDelete.length > 0 && (
+              <div className="d-grid">
+                <Button
+                  variant="danger"
+                  onClick={() => handleOnDelete(null, true)}
+                >
+                  Delete {idsToDelete.length} transactions
+                </Button>
+              </div>
+            )}
           </div>
         </Col>
       </Row>
@@ -214,5 +259,4 @@ const Transaction = () => {
     </Container>
   );
 };
-
 export default Transaction;

@@ -69,6 +69,7 @@ const LoginForm = () => {
   useEffect(() => {
     user?._id && navigate(pastLocation);
   }, [user?._id]);
+
   return (
     <div>
       <h1>Login Here</h1>

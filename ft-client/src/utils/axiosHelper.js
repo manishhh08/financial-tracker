@@ -19,7 +19,7 @@ const apiProcessor = async ({ method, data, url, isPrivate }) => {
   } catch (err) {
     return {
       status: false,
-      message: err?.response?.data?.message || err.message,
+      message: "err?.response?.data?.message || err.message",
     };
   }
 };
@@ -68,11 +68,13 @@ export const createTransaction = async (obj) => {
 };
 
 //delete transacation
-export const deleteTransaction = async (id) => {
+export const deleteTransaction = async (data) => {
   return apiProcessor({
     method: "delete",
-    url: `${apiUrl}/transactions/${id}`,
+    // url: `${apiUrl}/transactions/${id}`,
+    url: `${apiUrl}/transactions`,
     isPrivate: true,
+    data,
   });
 };
 

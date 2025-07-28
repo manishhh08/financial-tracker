@@ -35,10 +35,13 @@ const TransactionForm = ({
       name: "date",
       type: "date",
       placeholder: "Date",
-      value: form.updatedAt,
+      value: form.date,
     },
   ];
+
+  //console.log(111, form.date);
   //console.log(form.date);
+
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     // call create transaction api
