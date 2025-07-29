@@ -5,13 +5,16 @@ import App from "./App.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./context/userContext.jsx";
+import store from "./redux-store/store.js";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       {/* wrap app with userprovider */}
       <UserProvider>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </UserProvider>
     </BrowserRouter>
   </StrictMode>
