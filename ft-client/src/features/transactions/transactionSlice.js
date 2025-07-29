@@ -12,7 +12,7 @@ const transacationSlice = createSlice({
     setTransactions: (state, actions) => {
       state.transactions = actions.payload;
     },
-    addTransactions: (state, actions) => {
+    addTransaction: (state, actions) => {
       state.transactions.push(actions.payload);
     },
   },

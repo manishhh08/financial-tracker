@@ -14,6 +14,7 @@ import {
 import { toast } from "react-toastify";
 import { useUser } from "../context/userContext";
 import useForm from "../hooks/useForm";
+import { setTransactions } from "../features/transactions/transactionSlice.js";
 
 const Transaction = () => {
   const { testFunction, user } = useUser();
@@ -34,7 +35,10 @@ const Transaction = () => {
 
   const [total, setTotal] = useState(0);
 
-  const [transactions, setTransactions] = useState([]);
+  //const [transactions, setTransactions] = useState([]);
+
+  const dispatch = useDispatch();
+  const { transactions } = useSelector((store) => store.transacationStore);
   const fetchTransaction = async () => {
     // fetch the token from localstorage
 
@@ -42,7 +46,7 @@ const Transaction = () => {
 
     console.log(data);
     //console.log(testFunction());
-    setTransactions(data.transactions);
+    dispatch(setTransactions(data.transactions));
 
     let tempTotal = data.transactions.reduce((acc, item) => {
       return item.type == "income"
