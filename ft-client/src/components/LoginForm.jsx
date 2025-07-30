@@ -75,8 +75,10 @@ const LoginForm = () => {
       <h1>Login Here</h1>
       <hr />
       <Form onSubmit={handleOnSubmit}>
-        {inputFields.map((item) => {
-          return <CustomInput {...item} onChange={handleOnChange} />;
+        {inputFields.map((item, index) => {
+          return (
+            <CustomInput key={index} {...item} onChange={handleOnChange} />
+          );
         })}
 
         <Button variant="primary" type="submit">

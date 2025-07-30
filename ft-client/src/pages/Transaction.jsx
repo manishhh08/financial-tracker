@@ -14,6 +14,7 @@ import {
 import { toast } from "react-toastify";
 import { useUser } from "../context/userContext";
 import useForm from "../hooks/useForm";
+import { useDispatch, useSelector } from "react-redux";
 import { setTransactions } from "../features/transactions/transactionSlice.js";
 
 const Transaction = () => {
@@ -49,7 +50,7 @@ const Transaction = () => {
     dispatch(setTransactions(data.transactions));
 
     let tempTotal = data.transactions.reduce((acc, item) => {
-      return item.type == "income"
+      return item.type.toLowerCase() == "income"
         ? acc + parseFloat(item.amount)
         : acc - parseFloat(item.amount);
     }, 0);
@@ -161,6 +162,7 @@ const Transaction = () => {
               </thead>
               <tbody>
                 {transactions.map((t, index) => {
+                  console.log(t);
                   return (
                     <tr>
                       {/* <td>
@@ -175,21 +177,15 @@ const Transaction = () => {
                         />
                       </td>
                       <td>{index + 1}</td>
-                      <td>{t.updatedAt.slice(0, 10)}</td>
-                      {/* <td>
-                        {(() => {
-                          const [year, month, day] = t.date
-                            .split("T")[0]
-                            .split("-");
-                          return `${day}/${month}/${year}`;
-                        })()}
-                      </td> */}
+                      <td>{t.date.slice(0, 10)}</td>
                       <td>{t.description}</td>
                       <td className="text-danger">
-                        {t.type == "expense" ? "$" + t.amount : ""}
+                        {t.type.toLowerCase() == "expense"
+                          ? "$" + t.amount
+                          : ""}
                       </td>
                       <td className="text-success">
-                        {t.type == "income" ? "$" + t.amount : ""}
+                        {t.type.toLowerCase() == "income" ? "$" + t.amount : ""}
                       </td>
                       <td>
                         <button

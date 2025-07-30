@@ -35,7 +35,7 @@ const TransactionForm = ({
       name: "date",
       type: "date",
       placeholder: "Date",
-      value: form.date,
+      value: form.date.split("T")[0] || "",
     },
   ];
 
