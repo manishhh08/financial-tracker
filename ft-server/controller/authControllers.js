@@ -1,6 +1,8 @@
 import bcrypt from "bcryptjs";
-import { createUser, getUser } from "../models/users/userModel.js";
+import { createUser, getUser, updateUser } from "../models/users/userModel.js";
 import jwt from "jsonwebtoken";
+import { sendEmailVerificationTemplate } from "../utils/emailProcessor.js";
+import { v4 as uuidv4 } from "uuid";
 
 export const registerUser = async (req, res) => {
   try {
@@ -11,10 +13,26 @@ export const registerUser = async (req, res) => {
     userObj.password = bcrypt.hashSync(userObj.password, salt);
 
     let newUser = await createUser(userObj);
+    if (newUser._id) {
+      //create unique token and update in db
+      const emailVerificationToken = uuidv4();
+      const result = await updateUser(newUser._id, { emailVerificationToken });
+
+      //send email verification with token
+      const url =
+        process.env.EMAIL_SMTP +
+        `/verify-email?t=${emailVerificationToken}&email=${newUser.email}`;
+
+      sendEmailVerificationTemplate({
+        to: newUser.email,
+        url,
+        userName: newUser.userName,
+      });
+    }
 
     return res.status(201).json({
       status: true,
-      message: "user created",
+      message: "User created",
       newUser,
     });
   } catch (err) {
@@ -22,7 +40,7 @@ export const registerUser = async (req, res) => {
     if (err.message.includes("E11000")) {
       return res.status(400).json({
         status: false,
-        message: "Email already used",
+        message: "Invalid email or username",
       });
     } else {
       return res.status(500).json({
@@ -35,16 +53,28 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   try {
+    // login user
     // let email = req.body.email;
-    // let password = req.password.password;
+    // let pasword = req.body.password;
+
     let { email, password } = req.body;
+
+    // fetch user fro database
     let user = await getUser({ email: email });
+    if (!user.status && !user.isEmailVerified) {
+      return res.status(401).json({
+        status: false,
+        message:
+          "Your email is not verified or account is inactive, contact admin!",
+      });
+    }
+
     if (user) {
-      //user found
-      //user.password retrieved from db
-      //compare received password with db
-      let comparePassword = bcrypt.compareSync(password, user.password);
-      if (comparePassword) {
+      // user found
+      // user.password -> db password
+      // compare password with user.password
+      let passwordMatch = bcrypt.compareSync(password, user.password);
+      if (passwordMatch) {
         user.password = "";
 
         let payload = {
@@ -52,8 +82,9 @@ export const loginUser = async (req, res) => {
         };
 
         let accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
-          expiresIn: process.env.EXPIRES_IN,
+          expiresIn: process.env.JWT_EXPIRESIN,
         });
+
         return res.status(200).json({
           status: true,
           message: "Login Successful",
@@ -63,20 +94,21 @@ export const loginUser = async (req, res) => {
       } else {
         return res.status(401).json({
           status: false,
-          message: "Password not match",
+          message: "User not authenticated!",
         });
       }
     } else {
+      // user not found
       return res.status(401).json({
         status: false,
-        message: "Combination of email or password is incorrect",
+        message: "The combination of email and password is incorrect!",
       });
     }
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({
       status: false,
-      message: "Login failed",
+      message: "SERVER ERROR",
     });
   }
 };
