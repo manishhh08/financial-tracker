@@ -9,8 +9,8 @@ export const getTransactionsByUserId = (userId) => {
 };
 
 //create transactions
-export const insertTranscation = (trasactionObj) => {
-  return Transaction.insertOne(trasactionObj);
+export const insertTranscation = (transactionObj) => {
+  return Transaction.insertOne(transactionObj);
 };
 
 //delete transactions
@@ -28,10 +28,7 @@ export const deleteTransactionsByUserId = (idsToDelte, userId) => {
 
 //update transaction
 export const updateTranscationByUserId = (tid, userId, tObject) => {
-  return (
-    Transaction.findOneAndUpdate({ _id: tid, userId }, tObject),
-    {
-      new: true,
-    }
-  );
+  return Transaction.findOneAndUpdate({ _id: tid, userId }, tObject, {
+    new: true,
+  });
 };

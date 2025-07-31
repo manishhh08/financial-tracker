@@ -1,5 +1,6 @@
 import {
   deleteTransactionByUserId,
+  deleteTransactionsByUserId,
   getTransactionsByUserId,
   insertTranscation,
   updateTranscationByUserId,
@@ -49,61 +50,54 @@ export const getTransactions = async (req, res) => {
 //delete transaction api
 export const deleteTransaction = async (req, res) => {
   try {
-    let deleteTransactionId = req.params.id;
+    // let deleteTransactionId = req.params.id;
     let userId = req.user._id;
+    let tid = req.body;
 
-    const deleteTransacation = await deleteTransactionByUserId(
-      deleteTransactionId,
-      userId
-    );
-    if (deleteTransacation) {
-      return res.status(200).json({
-        status: true,
-        message: "Transaction delete succesfully",
-      });
-    } else {
-      return res.status(404).json({
-        status: false,
-        message: "Transaction not found",
-      });
-    }
+    const deleteTransacation = await deleteTransactionsByUserId(tid, userId);
+
+    return res.status(200).json({
+      status: true,
+      message: "Transaction delete succesfully",
+      deleteTransacation,
+    });
   } catch (err) {
     return res.status(401).json({
       status: false,
-      message: "Failed to retrieve information",
+      message: "Failed to delete transaction",
     });
   }
 };
 
 //delete multiple transaction api
-export const deleteMultipleTransaction = async (req, res) => {
-  try {
-    let deleteTransacationsId = req.params.idsToDelete;
-    const multipleIds = idsToDeleteParam.split(",");
+// export const deleteMultipleTransaction = async (req, res) => {
+//   try {
+//     let deleteTransacationsId = req.params.idsToDelete;
+//     const multipleIds = idsToDeleteParam.split(",");
 
-    const deleteMultipleTransaction = await deleteTransactionByUserId(
-      deleteTransacationsId,
-      multipleIds
-    );
+//     const deleteMultipleTransaction = await deleteTransactionByUserId(
+//       deleteTransacationsId,
+//       multipleIds
+//     );
 
-    if (deleteMultipleTransaction) {
-      return res.status(200).json({
-        status: true,
-        message: "Transaction delete succesfully",
-      });
-    } else {
-      return res.status(404).json({
-        status: false,
-        message: "Transaction not found",
-      });
-    }
-  } catch (err) {
-    return res.status(401).json({
-      status: false,
-      message: "Failed to retrive information",
-    });
-  }
-};
+//     if (deleteMultipleTransaction) {
+//       return res.status(200).json({
+//         status: true,
+//         message: "Transaction delete succesfully",
+//       });
+//     } else {
+//       return res.status(404).json({
+//         status: false,
+//         message: "Transaction not found",
+//       });
+//     }
+//   } catch (err) {
+//     return res.status(401).json({
+//       status: false,
+//       message: "Failed to retrive information",
+//     });
+//   }
+// };
 
 //update transaction api
 export const updateTransaction = async (req, res) => {

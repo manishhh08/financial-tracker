@@ -9,9 +9,9 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
-  const testFunction = () => {
-    return "Test function";
-  };
+  // const testFunction = () => {
+  //   return "Test function";
+  // };
 
   //auto login feature
   const autoLogin = async () => {
@@ -25,7 +25,7 @@ export const UserProvider = ({ children }) => {
   let sharedData = {
     user,
     setUser,
-    testFunction,
+    // testFunction,
     autoLogin,
   };
 

@@ -19,7 +19,7 @@ const apiProcessor = async ({ method, data, url, isPrivate }) => {
   } catch (err) {
     return {
       status: false,
-      message: "err?.response?.data?.message || err.message",
+      message: err?.response?.data?.message || err.message,
     };
   }
 };

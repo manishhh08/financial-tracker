@@ -73,6 +73,7 @@ const TransactionForm = ({
         aria-label="Default select example"
         name="type"
         onChange={handleOnChange}
+        defaultValue={"income"}
       >
         <option value="income" selected={form.type == "income"}>
           Income

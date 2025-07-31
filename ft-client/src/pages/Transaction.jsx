@@ -35,11 +35,10 @@ const Transaction = () => {
   const handleShow = () => setShow(true);
 
   const [total, setTotal] = useState(0);
+  const [transactions, setTransactions] = useState([]);
 
-  //const [transactions, setTransactions] = useState([]);
-
-  const dispatch = useDispatch();
-  const { transactions } = useSelector((store) => store.transacationStore);
+  // const dispatch = useDispatch();
+  // const { transactions } = useSelector((store) => store.transacationStore);
   const fetchTransaction = async () => {
     // fetch the token from localstorage
 
@@ -47,10 +46,12 @@ const Transaction = () => {
 
     console.log(data);
     //console.log(testFunction());
-    dispatch(setTransactions(data.transactions));
+    // dispatch(setTransactions(data.transactions));
+    setTransactions(data.transactions);
 
     let tempTotal = data.transactions.reduce((acc, item) => {
-      return item.type.toLowerCase() == "income"
+      // return item.type.toLowerCase() == "income"
+      return item.type == "income"
         ? acc + parseFloat(item.amount)
         : acc - parseFloat(item.amount);
     }, 0);
@@ -70,6 +71,7 @@ const Transaction = () => {
     const toDeletData = isMany ? idsToDelete : [id];
     // delete axios
     let data = await deleteTransaction(toDeletData);
+
     if (data.status) {
       toast.success(data.message);
       fetchTransaction();
@@ -122,7 +124,7 @@ const Transaction = () => {
               className="btn btn-primary"
               onClick={() => {
                 setForm({
-                  type: "Income",
+                  type: "income",
                   description: "",
                   amount: 0,
                   date: "",
@@ -164,7 +166,7 @@ const Transaction = () => {
                 {transactions.map((t, index) => {
                   console.log(t);
                   return (
-                    <tr>
+                    <tr key={t._id}>
                       {/* <td>
                         <Form.Check value={t._id} onClick={handleOnSelect} />
                       </td> */}
@@ -177,15 +179,23 @@ const Transaction = () => {
                         />
                       </td>
                       <td>{index + 1}</td>
-                      <td>{t.date.slice(0, 10)}</td>
+                      {/* <td>{t.date.slice(0, 10)}</td> */}
+                      <td>{t.date.split("T")[0]}</td>
                       <td>{t.description}</td>
-                      <td className="text-danger">
+                      {/* <td className="text-danger">
                         {t.type.toLowerCase() == "expense"
                           ? "$" + t.amount
                           : ""}
                       </td>
                       <td className="text-success">
                         {t.type.toLowerCase() == "income" ? "$" + t.amount : ""}
+                      </td> */}
+
+                      <td className="text-danger">
+                        {t.type == "expense" ? "$" + t.amount : ""}
+                      </td>
+                      <td className="text-success">
+                        {t.type == "income" ? "$" + t.amount : ""}
                       </td>
                       <td>
                         <button

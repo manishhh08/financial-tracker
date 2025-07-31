@@ -71,7 +71,7 @@ const LoginForm = () => {
   }, [user?._id]);
 
   return (
-    <div>
+    <>
       <h1>Login Here</h1>
       <hr />
       <Form onSubmit={handleOnSubmit}>
@@ -85,7 +85,7 @@ const LoginForm = () => {
           Submit
         </Button>
       </Form>
-    </div>
+    </>
   );
 };
 

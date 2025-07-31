@@ -12,14 +12,15 @@ const Dashboard = () => {
     transaction_no: 101,
     last_transaction: {
       description: "Salary",
-      type: "income",
-      date: "22-02'2025",
+      date: "22-02-2025",
       amount: 10000,
+      type: "income",
     },
   });
 
   const fetchDashboardMetric = async () => {
     let data = await getDashboardInformation();
+
     if (data.status) {
       setDashboardObject(data.metrics);
     }
@@ -62,16 +63,22 @@ const Dashboard = () => {
           <h3>Last Transaction</h3>
           <hr />
           <strong className="fs-4">
-            Description: {dashboardObject?.last_transaction?.description}
+            Description:
+            {dashboardObject?.last_transaction?.description
+              .charAt(0)
+              .toUpperCase() +
+              dashboardObject?.last_transaction?.description.slice(1)}
           </strong>
           <strong className="fs-4">
             Amount: {dashboardObject?.last_transaction?.amount}
           </strong>
           <strong className="fs-4">
-            Date: {dashboardObject?.last_transaction?.date}
+            Date: {dashboardObject?.last_transaction?.date.split("T")[0]}
           </strong>
           <strong className="fs-4">
-            Type: {dashboardObject?.last_transaction?.type}
+            Type:
+            {dashboardObject?.last_transaction?.type.charAt(0).toUpperCase() +
+              dashboardObject?.last_transaction?.type.slice(1)}
           </strong>
         </Col>
       </Row>

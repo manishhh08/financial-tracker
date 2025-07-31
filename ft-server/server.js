@@ -94,7 +94,7 @@ app.post("/api/v1/transactions", auth, createTranscations);
 app.get("/api/v1/transactions", auth, getTransactions);
 
 //delete a transaction
-app.delete("/api/v1/transactions/:id", auth, deleteTransaction);
+app.delete("/api/v1/transactions/", auth, deleteTransaction);
 
 //update a transaction
 app.patch("/api/v1/transactions/:id", auth, updateTransaction);

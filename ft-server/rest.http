@@ -27,7 +27,7 @@ Content-Type: application/json
 ###
  POST {{apiUrl}}/transactions
 Content-Type:  application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwiaWF0IjoxNzUzMTA0MTk1LCJleHAiOjE3NTMxOTA1OTV9.GwVvfOq8dErzrVf-dlcwCxkePERBkU6p1qXDpnVuUxo
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwiaWF0IjoxNzUzOTQzMzYxLCJleHAiOjE3NTQwMjk3NjF9.4Z1qHK68-MikCO8IXwOfgX6HOgu_YQ9ljvGCKJYTdcU
 
 {
    "type":"income",
@@ -37,13 +37,13 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZ21haWwu
 }
 ###
 GET {{apiUrl}}/transactions
-Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwiaWF0IjoxNzUzMTA0MTk1LCJleHAiOjE3NTMxOTA1OTV9.GwVvfOq8dErzrVf-dlcwCxkePERBkU6p1qXDpnVuUxo
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwiaWF0IjoxNzUzOTQzMzYxLCJleHAiOjE3NTQwMjk3NjF9.4Z1qHK68-MikCO8IXwOfgX6HOgu_YQ9ljvGCKJYTdcU
 
 
 ###
-DELETE {{apiUrl}}/delete/6877ab241fa0bac89463450f
+DELETE {{apiUrl}}/delete/688aff4ffa339a841d398d1b
 Content-Type: application/json
-Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haUBnbWFpbC5jb20iLCJpYXQiOjE3NTI2NzI5OTUsImV4cCI6MTc1Mjc1OTM5NX0.wJbRg16qSW0U3sxsSCY3u2xIsm1cdFOG9adYgRpBrRM
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwiaWF0IjoxNzUzOTQzMzYxLCJleHAiOjE3NTQwMjk3NjF9.4Z1qHK68-MikCO8IXwOfgX6HOgu_YQ9ljvGCKJYTdcU
 
 
 ###

@@ -7,7 +7,7 @@ const Login = () => {
     <Container className="bg-dark ">
       <Row>
         <Col md={6} className="p-5 rounded text-white">
-          <h2>Welcome Back, User</h2>
+          <h2>Welcome To Your Personalised Financial Tracker</h2>
         </Col>
         <Col className="p-5 rounded text-white">
           <LoginForm />
