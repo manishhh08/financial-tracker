@@ -5,7 +5,11 @@ import dotenv from "dotenv";
 dotenv.config();
 import mongoConnection from "./config/mongoConfig.js";
 
-import { loginUser, registerUser } from "./controller/authControllers.js";
+import {
+  loginUser,
+  registerUser,
+  verifyEmail,
+} from "./controller/authControllers.js";
 import {
   createTranscations,
   deleteTransaction,
@@ -35,7 +39,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// auth routes
+// User authentication routes
 //create user
 app.post("/api/v1/auth", registerUser);
 
@@ -51,7 +55,10 @@ app.get("/api/v1/auth/user", auth, (req, res) => {
   });
 });
 
-//dashboard api
+// verify email
+app.get("/api/v1/verify-email", verifyEmail);
+
+//Dashboard route
 app.get("/api/v1/dashboard", auth, async (req, res) => {
   let userId = req.user._id;
 
@@ -86,7 +93,7 @@ app.get("/api/v1/dashboard", auth, async (req, res) => {
   return res.json(responseObject);
 });
 
-//transaction
+//Transaction routes
 //create a transaction
 app.post("/api/v1/transactions", auth, createTranscations);
 

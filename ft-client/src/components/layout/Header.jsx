@@ -14,7 +14,7 @@ const Header = () => {
       bg="dark"
     >
       <Container>
-        <Navbar.Brand href="#home">FT</Navbar.Brand>
+        <Navbar.Brand href="/dashboard">FT</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">

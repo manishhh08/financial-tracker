@@ -24,6 +24,7 @@ const apiProcessor = async ({ method, data, url, isPrivate }) => {
   }
 };
 
+//User APIs
 // create user
 export const postUser = async (obj) => {
   // let response = await axios.post(`${apiUrl}/auth`, obj);
@@ -48,6 +49,24 @@ export const loginUser = async (obj) => {
   });
 };
 
+//get user detail
+export const getUserDetail = async () => {
+  return apiProcessor({
+    method: "get",
+    url: `${apiUrl}/auth/user`,
+    isPrivate: true,
+  });
+};
+// verify user
+export const verifyUser = async (token, email) => {
+  return apiProcessor({
+    method: "get",
+    url: `${apiUrl}/verify-email?t=${token}&email=${email}`,
+    isPrivate: false,
+  });
+};
+
+//Transaction APIs
 // get transaction
 export const getTransation = async () => {
   return apiProcessor({
@@ -84,14 +103,6 @@ export const updateTransaction = async (obj, id) => {
     method: "patch",
     url: `${apiUrl}/transactions/${id}`,
     data: obj,
-    isPrivate: true,
-  });
-};
-//get user detail
-export const getUserDetail = async () => {
-  return apiProcessor({
-    method: "get",
-    url: `${apiUrl}/auth/user`,
     isPrivate: true,
   });
 };

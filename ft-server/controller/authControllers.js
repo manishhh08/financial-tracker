@@ -20,13 +20,13 @@ export const registerUser = async (req, res) => {
 
       //send email verification with token
       const url =
-        process.env.EMAIL_SMTP +
+        process.env.ROOT_DOMAIN +
         `/verify-email?t=${emailVerificationToken}&email=${newUser.email}`;
 
       sendEmailVerificationTemplate({
         to: newUser.email,
         url,
-        userName: newUser.userName,
+        userName: newUser.username,
       });
     }
 
@@ -109,6 +109,56 @@ export const loginUser = async (req, res) => {
     return res.status(500).json({
       status: false,
       message: "SERVER ERROR",
+    });
+  }
+};
+
+export const verifyEmail = async (req, res) => {
+  try {
+    let token = req.query.t;
+    let email = req.query.email;
+
+    let user = await getUser({ email: email });
+
+    if (user) {
+      // let updatedUSer = await updateUser(
+      //   { email: email },
+      //   { isEmailVerified: true }
+      // );
+
+      if (user.isEmailVerified) {
+        return res.json({
+          status: false,
+          message: "User already verified",
+        });
+      }
+
+      if (user.emailVerificationToken === token) {
+        user.isEmailVerified = true;
+        user.emailVerificationToken = "";
+        await user.save();
+
+        return res.json({
+          status: true,
+          message: "Verified",
+        });
+      } else {
+        return res.json({
+          status: false,
+          message: "Email could not be verified",
+        });
+      }
+    } else {
+      return res.json({
+        status: false,
+        message: "User not found",
+      });
+    }
+  } catch (err) {
+    console.log(err.message);
+    return res.json({
+      status: false,
+      message: "Verification Failed",
     });
   }
 };
