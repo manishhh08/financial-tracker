@@ -54,12 +54,12 @@ export const deleteTransaction = async (req, res) => {
     let userId = req.user._id;
     let tid = req.body;
 
-    const deleteTransacation = await deleteTransactionsByUserId(tid, userId);
+    const deleteTransaction = await deleteTransactionsByUserId(tid, userId);
 
     return res.status(200).json({
       status: true,
-      message: "Transaction delete succesfully",
-      deleteTransacation,
+      message: "Transaction deleted succesfully",
+      deleteTransaction,
     });
   } catch (err) {
     return res.status(401).json({
@@ -115,7 +115,7 @@ export const updateTransaction = async (req, res) => {
     );
     return res.json({
       status: true,
-      message: "Transaction Update Successful",
+      message: "Transaction Updated Successful",
       transaction: updatedTransaction,
     });
   } catch (err) {
