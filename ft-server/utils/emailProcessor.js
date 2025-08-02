@@ -6,6 +6,7 @@ export const processEmail = async (obj) => {
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_SMTP,
     port: process.env.EMAIL_PORT,
+    secure: false, // true for 465, false for other ports
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
@@ -13,7 +14,7 @@ export const processEmail = async (obj) => {
   });
 
   const info = await transporter.sendMail({
-    from: `"Financial Tracker" <${process.env.EMAIL_USER}>`,
+    from: `"Team Financial Tracker" <${process.env.EMAIL_USER}>`,
     ...obj,
   });
   console.log("Message sent: %s", info.messageId);
@@ -21,10 +22,11 @@ export const processEmail = async (obj) => {
 
 //create email body
 
-export const sendEmailVerificationTemplate = async ({ to, url, userName }) => {
+export const sendEmailVerificationTemplate = async ({ to, url }) => {
   const obj = {
     to,
     subject: "Email Verification",
+    text: `Please verify your email by copy and peasting the link to your browser. ${url}`,
     html: `<h1>Hello and Welcome User</h1>
              <br />
     <br /> <br />
