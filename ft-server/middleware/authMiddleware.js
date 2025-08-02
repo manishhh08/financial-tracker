@@ -13,6 +13,7 @@ export const auth = async (req, res, next) => {
     let user = await getUser({ email: decoded.email });
 
     if (user) {
+      user.password = "";
       req.user = user;
       next();
     } else {
