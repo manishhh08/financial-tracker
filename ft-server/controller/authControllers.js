@@ -10,6 +10,7 @@ export const registerUser = async (req, res) => {
 
     //encrypt password
     let salt = bcrypt.genSaltSync(10);
+    //  let salt = bcrypt.genSaltSync(parseInt(process.env.SALT) || 10);
     userObj.password = bcrypt.hashSync(userObj.password, salt);
 
     let newUser = await createUser(userObj);
@@ -32,8 +33,8 @@ export const registerUser = async (req, res) => {
 
     return res.status(201).json({
       status: true,
-      message: "User created",
-      newUser,
+      message: "User created successfully, please verify your email",
+      // newUser,
     });
   } catch (err) {
     console.log(err.message);
