@@ -5,7 +5,19 @@ export const auth = async (req, res, next) => {
   //if auth go to next step
   //else respond with error
   try {
-    let accessToken = req.headers.authorization;
+    // let accessToken = req.headers.authorization;
+
+    //new way to get access token
+    let authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({
+        status: false,
+        message: "Unauthorized: No or invalid token format",
+      });
+    }
+
+    let accessToken = authHeader.split(" ")[1];
 
     let decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
     // console.log(accessToken);
@@ -25,7 +37,7 @@ export const auth = async (req, res, next) => {
   } catch (err) {
     return res.status(401).json({
       status: false,
-      message: "Unauthorised!!!",
+      message: "Invalid token or session expired",
     });
   }
 };
