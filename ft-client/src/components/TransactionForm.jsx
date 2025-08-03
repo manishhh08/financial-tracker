@@ -4,14 +4,10 @@ import { createTransaction, updateTransaction } from "../utils/axiosHelper";
 import { toast } from "react-toastify";
 import { Button, Form } from "react-bootstrap";
 import CustomInput from "./CustomInput";
+import { useDispatch } from "react-redux";
 
-const TransactionForm = ({
-  form,
-  setForm,
-  handleOnChange,
-  fetchTransaction,
-  handleClose,
-}) => {
+const TransactionForm = ({ form, setForm, handleOnChange, handleClose }) => {
+  const dispatch = useDispatch();
   let inputFields = [
     {
       id: "description",
@@ -58,7 +54,9 @@ const TransactionForm = ({
     if (data.status) {
       // successfully created transaction
       toast.success(data.message);
-      fetchTransaction();
+      // fetchTransaction();
+      // dispatch the action to update the state
+      dispatch(fetchTransaction());
       // hide modal
       handleClose();
     } else {

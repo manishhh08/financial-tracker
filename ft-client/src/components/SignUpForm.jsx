@@ -15,7 +15,7 @@ const SignupForm = () => {
     email: "",
     password: "",
   };
-  console.log(useState(0));
+  //console.log(useState(0));
   const { form, setForm, handleOnChange } = useForm(initialState);
 
   let inputFields = [
@@ -59,8 +59,8 @@ const SignupForm = () => {
 
     //make create user post req from axios
     if (form.password != form.cpassword) {
-      toast.error("PASSWORD MISMATCH", {
-        position: "bottom-center",
+      toast.error("Email or Password combination incorrect!!! Try again", {
+        position: "top-right",
         theme: "dark",
       });
     } else {

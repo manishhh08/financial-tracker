@@ -26,6 +26,7 @@ const LoginForm = () => {
       name: "email",
       type: "email",
       placeholder: "Enter your email",
+      value: form.email,
     },
 
     {
@@ -34,6 +35,7 @@ const LoginForm = () => {
       name: "password",
       type: "password",
       placeholder: "Enter your password",
+      value: form.password,
     },
   ];
 
