@@ -10,7 +10,8 @@ export const apiProcessor = async ({ method, data, url, isPrivate }) => {
       data: data,
       headers: isPrivate
         ? {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            // Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            Authorization: localStorage.getItem("accessToken"),
           }
         : {},
     });
