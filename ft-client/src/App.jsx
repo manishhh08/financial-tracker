@@ -10,14 +10,19 @@ import { ToastContainer } from "react-toastify";
 import Auth from "./auth/Auth";
 import { useUser } from "./context/userContext";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 function App() {
-  const { setUser, autoLogin } = useUser();
+  const { setUser, autoLogin, user } = useUser();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     autoLogin();
   }, []);
 
+  useEffect(() => {
+    user && user._id ? dispatch(fetchTransactions()) : "";
+  }, [user?._id]);
   return (
     <>
       <div className="wrapper">

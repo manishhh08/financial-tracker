@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateTransaction } from "../../utils/axiosHelper";
 
 const initialState = {
   transactions: [],
@@ -15,9 +14,12 @@ const transacationSlice = createSlice({
     addTransaction: (state, actions) => {
       state.transactions.push(actions.payload);
     },
+    resetTransaction: (state) => {
+      state.transactions = [];
+    },
   },
 });
 
 const { reducer, actions } = transacationSlice;
-export const { setTransactions, addTransactions } = actions;
+export const { setTransactions, addTransactions, resetTransaction } = actions;
 export default reducer;

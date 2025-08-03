@@ -2,7 +2,7 @@ import axios from "axios";
 const apiUrl = import.meta.env.VITE_APP_API_URL + "/api/v1";
 
 // axios helper
-const apiProcessor = async ({ method, data, url, isPrivate }) => {
+export const apiProcessor = async ({ method, data, url, isPrivate }) => {
   try {
     let response = await axios({
       method: method,
@@ -10,7 +10,7 @@ const apiProcessor = async ({ method, data, url, isPrivate }) => {
       data: data,
       headers: isPrivate
         ? {
-            Authorization: localStorage.getItem("accessToken"),
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           }
         : {},
     });
@@ -63,47 +63,6 @@ export const verifyUser = async (token, email) => {
     method: "get",
     url: `${apiUrl}/verify-email?t=${token}&email=${email}`,
     isPrivate: false,
-  });
-};
-
-//Transaction APIs
-// get transaction
-export const getTransation = async () => {
-  return apiProcessor({
-    method: "get",
-    url: `${apiUrl}/transactions`,
-    isPrivate: true,
-  });
-};
-
-//create transaction
-export const createTransaction = async (obj) => {
-  return apiProcessor({
-    method: "post",
-    url: `${apiUrl}/transactions`,
-    data: obj,
-    isPrivate: true,
-  });
-};
-
-//delete transacation
-export const deleteTransaction = async (data) => {
-  return apiProcessor({
-    method: "delete",
-    // url: `${apiUrl}/transactions/${id}`,
-    url: `${apiUrl}/transactions`,
-    isPrivate: true,
-    data,
-  });
-};
-
-//update transaction
-export const updateTransaction = async (obj, id) => {
-  return apiProcessor({
-    method: "patch",
-    url: `${apiUrl}/transactions/${id}`,
-    data: obj,
-    isPrivate: true,
   });
 };
 

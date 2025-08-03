@@ -20,6 +20,8 @@ export const UserProvider = ({ children }) => {
 
     if (data.status) {
       setUser(data.user);
+    } else {
+      setUser({});
     }
   };
   let sharedData = {

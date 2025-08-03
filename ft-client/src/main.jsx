@@ -10,10 +10,10 @@ import store from "./redux-store/store.js";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    ``
     <BrowserRouter>
       {/* wrap app with userprovider */}
       <UserProvider>
+        {/* redux provider */}
         <Provider store={store}>
           <App />
         </Provider>

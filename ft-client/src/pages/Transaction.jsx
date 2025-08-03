@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { deleteTransaction, getTransation } from "../utils/axiosHelper";
 import TransactionForm from "../components/TransactionForm";
 import {
   Button,
@@ -15,7 +14,7 @@ import { toast } from "react-toastify";
 import { useUser } from "../context/userContext";
 import useForm from "../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
-import { setTransactions } from "../features/transactions/transactionSlice.js";
+import { removeTransaction } from "../features/transactions/transactionActions.js";
 
 const Transaction = () => {
   const { testFunction, user } = useUser();
@@ -35,34 +34,40 @@ const Transaction = () => {
   const handleShow = () => setShow(true);
 
   const [total, setTotal] = useState(0);
-  const [transactions, setTransactions] = useState([]);
+  //const [transactions, setTransactions] = useState([]);
+  // redux
+  const dispatch = useDispatch();
+  const { transactions } = useSelector((store) => store.transactionStore);
+  // const fetchTransaction = async () => {
+  //   // fetch the token from localstorage
 
-  // const dispatch = useDispatch();
-  // const { transactions } = useSelector((store) => store.transacationStore);
-  const fetchTransaction = async () => {
-    // fetch the token from localstorage
+  //   let data = await getTransation();
 
-    let data = await getTransation();
+  //   console.log(data);
+  //   //console.log(testFunction());
+  //   // dispatch(setTransactions(data.transactions));
+  //   setTransactions(data.transactions);
 
-    console.log(data);
-    //console.log(testFunction());
-    // dispatch(setTransactions(data.transactions));
-    setTransactions(data.transactions);
+  //   let tempTotal = data.transactions.reduce((acc, item) => {
+  //     // return item.type.toLowerCase() == "income"
+  //     return item.type == "income"
+  //       ? acc + parseFloat(item.amount)
+  //       : acc - parseFloat(item.amount);
+  //   }, 0);
 
-    let tempTotal = data.transactions.reduce((acc, item) => {
-      // return item.type.toLowerCase() == "income"
-      return item.type == "income"
-        ? acc + parseFloat(item.amount)
-        : acc - parseFloat(item.amount);
-    }, 0);
-
-    //console.log(tempTotal);
-    setTotal(tempTotal);
-  };
+  //   //console.log(tempTotal);
+  //   setTotal(tempTotal);
+  // };
 
   useEffect(() => {
-    fetchTransaction();
-  }, []);
+    setTotal(
+      transactions.reduce(
+        (acc, item) =>
+          item.type == "income" ? acc + item.amount : acc - item.amount,
+        0
+      )
+    );
+  }, [transactions]);
 
   const handleOnDelete = async (id, isMany) => {
     if (!window.confirm("Are you sure you want to delete this transaction?"))
@@ -70,28 +75,32 @@ const Transaction = () => {
 
     const toDeletData = isMany ? idsToDelete : [id];
     // delete axios
-    let data = await deleteTransaction(toDeletData);
+    //   let data = await deleteTransaction(toDeletData);
 
-    if (data.status) {
-      toast.success(data.message);
-      fetchTransaction();
-    } else {
-      toast.error(data.message);
-    }
+    //   if (data.status) {
+    //     toast.success(data.message);
+    //     fetchTransaction();
+    //   } else {
+    //     toast.error(data.message);
+    //   }
+    // };
+    //const handleOnSelect = (checked, id) => {
+    //   let tempIds = [...idsToDelete];
+    //   console.log(checked, id);
+    //   if (checked) {
+    //     // Check for the duplicate ids
+    //     tempIds.push(id);
+    //     setIdsToDelete(tempIds);
+    //   } else {
+    //     // Remove the ids from the array
+    //     tempIds = tempIds.filter((ti) => ti != id);
+    //     setIdsToDelete(tempIds);
+    //   }
+    // };
+
+    let data = await dispatch(removeTransaction(toDeletData));
+    toast[data.status ? "success" : "error"](data.message);
   };
-  //const handleOnSelect = (checked, id) => {
-  //   let tempIds = [...idsToDelete];
-  //   console.log(checked, id);
-  //   if (checked) {
-  //     // Check for the duplicate ids
-  //     tempIds.push(id);
-  //     setIdsToDelete(tempIds);
-  //   } else {
-  //     // Remove the ids from the array
-  //     tempIds = tempIds.filter((ti) => ti != id);
-  //     setIdsToDelete(tempIds);
-  //   }
-  // };
 
   const handleOnSelect = (e) => {
     const { checked, value } = e.target;
@@ -256,7 +265,7 @@ const Transaction = () => {
             form={form}
             setForm={setForm}
             handleOnChange={handleOnChange}
-            fetchTransaction={fetchTransaction}
+            //fetchTransaction={fetchTransaction}
             handleClose={handleClose}
           />
         </Modal.Body>

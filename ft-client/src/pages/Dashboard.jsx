@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { getDashboardInformation, getTransation } from "../utils/axiosHelper";
+import { getDashboardInformation } from "../utils/axiosHelper";
 import { useUser } from "../context/userContext";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   //hooks
+  const { transactions } = useSelector((store) => store.transactionStore);
+
   const [dashboardObject, setDashboardObject] = useState({
     balance: 1000,
     income: 100,
@@ -82,6 +85,21 @@ const Dashboard = () => {
           </strong>
         </Col>
       </Row>
+      <div>
+        <table>
+          <tbody>
+            {transactions.map((t) => {
+              return (
+                <tr>
+                  <td>{t.description}</td>
+                  <td>{t.amount}</td>
+                  <td>{t.type}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </Container>
   );
 };
