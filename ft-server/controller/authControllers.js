@@ -62,7 +62,7 @@ export const loginUser = async (req, res) => {
 
     // fetch user fro database
     let user = await getUser({ email: email });
-    if (!user.status && !user.isEmailVerified) {
+    if (!user?.status && !user?.isEmailVerified) {
       return res.status(401).json({
         status: false,
         message:
@@ -83,7 +83,8 @@ export const loginUser = async (req, res) => {
         };
 
         let accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
-          expiresIn: process.env.JWT_EXPIRESIN,
+          // expiresIn: process.env.JWT_EXPIRES_IN,
+          expiresIn: process.env.EXPIRES_IN,
         });
 
         return res.status(200).json({

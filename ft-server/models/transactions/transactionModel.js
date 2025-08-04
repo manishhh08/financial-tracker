@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import transactionsSchema from "./transactionSchema.js";
 
-export const Transaction = mongoose.model("Transaction", transactionsSchema);
+export const Transaction = mongoose.model("Transacation", transactionsSchema);
+// export const Transaction = mongoose.model("Transaction", transactionsSchema);
 
 //get transcations
 export const getTransactionsByUserId = (userId) => {
