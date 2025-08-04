@@ -58,7 +58,7 @@ const VerifyEmail = () => {
       <Row className="bg-dark p-5 rounded-5">
         <Col lg={6}>
           <div>
-            <h1>Verification kkkkk</h1>
+            <h1>Verification</h1>
             {isLoading ? (
               <Button variant="primary" disabled>
                 <Spinner animation="border" role="status">
