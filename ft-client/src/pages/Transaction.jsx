@@ -22,12 +22,13 @@ const Transaction = () => {
   const [show, setShow] = useState(false);
 
   const [idsToDelete, setIdsToDelete] = useState([]);
+  const getTodayDate = () => new Date().toISOString().split("T")[0];
 
   const { form, setForm, handleOnChange } = useForm({
     type: "income",
     description: "",
-    amount: 0,
-    date: "",
+    amount: "",
+    date: getTodayDate(),
   });
 
   const handleClose = () => setShow(false);
@@ -100,6 +101,10 @@ const Transaction = () => {
 
     let data = await dispatch(removeTransaction(toDeletData));
     toast[data.status ? "success" : "error"](data.message);
+    if (data.status) {
+      setIdsToDelete([]);
+      // fetchTransaction();
+    }
   };
 
   const handleOnSelect = (e) => {
@@ -135,8 +140,8 @@ const Transaction = () => {
                 setForm({
                   type: "income",
                   description: "",
-                  amount: 0,
-                  date: "",
+                  amount: "",
+                  date: getTodayDate(),
                 });
 
                 handleShow();
@@ -239,7 +244,7 @@ const Transaction = () => {
                 </tr>
               </tbody>
             </Table>
-            {idsToDelete.length > 0 && (
+            {idsToDelete.length > 0 && idsToDelete.length > 0 && (
               <div className="d-grid">
                 <Button
                   variant="danger"
@@ -256,9 +261,7 @@ const Transaction = () => {
       {/* Modal */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>
-            {form?._id ? "Update" : "Add"} Add Transaction
-          </Modal.Title>
+          <Modal.Title>{form?._id ? "Update" : "Add"} Transaction</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <TransactionForm

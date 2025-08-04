@@ -24,7 +24,7 @@ const TransactionForm = ({ form, setForm, handleOnChange, handleClose }) => {
       label: "Amount",
       name: "amount",
       type: "number",
-      placeholder: "Amount",
+      placeholder: "$0.0",
       value: form.amount,
     },
     {

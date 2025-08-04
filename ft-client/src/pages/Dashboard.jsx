@@ -80,26 +80,18 @@ const Dashboard = () => {
           </strong>
           <strong className="fs-4">
             Type:
-            {dashboardObject?.last_transaction?.type.charAt(0).toUpperCase() +
-              dashboardObject?.last_transaction?.type.slice(1)}
+            {/* {dashboardObject?.last_transaction?.type.charAt(0).toUpperCase() +
+              dashboardObject?.last_transaction?.type.slice(1)} */}
+            {/* {dashboardObject?.last_transaction?.type
+              .replace(";", "")
+              .charAt(0)
+              .toUpperCase() +
+              dashboardObject?.last_transaction?.type.replace(";", "").slice(1)} */}
+            {dashboardObject?.last_transaction?.type?.[0]?.toUpperCase() +
+              dashboardObject?.last_transaction?.type?.slice(1)}
           </strong>
         </Col>
       </Row>
-      <div>
-        <table>
-          <tbody>
-            {transactions.map((t) => {
-              return (
-                <tr>
-                  <td>{t.description}</td>
-                  <td>{t.amount}</td>
-                  <td>{t.type}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
     </Container>
   );
 };
