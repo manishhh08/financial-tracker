@@ -11,6 +11,8 @@ import Auth from "./auth/Auth";
 import { useUser } from "./context/userContext";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import VerifyEmail from "./pages/VerifyEmail";
+import { fetchTransactions } from "./features/transactions/transactionActions";
 
 function App() {
   const { setUser, autoLogin, user } = useUser();
@@ -49,6 +51,7 @@ function App() {
                 </Auth>
               }
             />
+            <Route path="verify-email" element={<VerifyEmail />} />
           </Route>
         </Routes>
       </div>

@@ -6,6 +6,7 @@ import {
   createTransaction,
   updateTransaction,
 } from "../features/transactions/transactionAxios";
+import { fetchTransactions } from "../features/transactions/transactionActions";
 
 const TransactionForm = ({ form, setForm, handleOnChange, handleClose }) => {
   const dispatch = useDispatch();
@@ -57,7 +58,7 @@ const TransactionForm = ({ form, setForm, handleOnChange, handleClose }) => {
       toast.success(data.message);
       // fetchTransaction();
       // dispatch the action to update the state
-      dispatch(fetchTransaction());
+      dispatch(fetchTransactions());
       // hide modal
       handleClose();
     } else {
