@@ -173,7 +173,7 @@ const Transaction = () => {
                   <th>Title</th>
                   <th>Out</th>
                   <th>In</th>
-                  <th>Delete</th>
+                  <th>Delete/ Update</th>
                 </tr>
               </thead>
               <tbody>
@@ -211,7 +211,7 @@ const Transaction = () => {
                       <td className="text-success">
                         {t.type == "income" ? "$" + t.amount : ""}
                       </td>
-                      <td>
+                      <td className="d-flex gap-4">
                         <button
                           className="btn btn-danger"
                           onClick={() => {
@@ -244,7 +244,7 @@ const Transaction = () => {
                 </tr>
               </tbody>
             </Table>
-            {idsToDelete.length > 0 && idsToDelete.length > 0 && (
+            {idsToDelete.length > 0 && (
               <div className="d-grid">
                 <Button
                   variant="danger"

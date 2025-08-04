@@ -70,13 +70,13 @@ const Dashboard = () => {
             {dashboardObject?.last_transaction?.description
               .charAt(0)
               .toUpperCase() +
-              dashboardObject?.last_transaction?.description.slice(1)}
+              dashboardObject?.last_transaction?.description.slice(1) || ""}
           </strong>
           <strong className="fs-4">
-            Amount: {dashboardObject?.last_transaction?.amount}
+            Amount: {dashboardObject?.last_transaction?.amount || ""}
           </strong>
           <strong className="fs-4">
-            Date: {dashboardObject?.last_transaction?.date.split("T")[0]}
+            Date: {dashboardObject?.last_transaction?.date.split("T")[0] || ""}
           </strong>
           <strong className="fs-4">
             Type:
@@ -88,7 +88,7 @@ const Dashboard = () => {
               .toUpperCase() +
               dashboardObject?.last_transaction?.type.replace(";", "").slice(1)} */}
             {dashboardObject?.last_transaction?.type?.[0]?.toUpperCase() +
-              dashboardObject?.last_transaction?.type?.slice(1)}
+              dashboardObject?.last_transaction?.type?.slice(1) || ""}
           </strong>
         </Col>
       </Row>

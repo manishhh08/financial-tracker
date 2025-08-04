@@ -50,7 +50,7 @@ const VerifyEmail = () => {
   // };
 
   useEffect(() => {
-    // handleOnClick();
+    handleOnClick();
   }, []);
   console.log("VerifyEmail");
   return (
