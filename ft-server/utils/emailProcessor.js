@@ -3,21 +3,25 @@ import nodemailer from "nodemailer";
 //send email
 export const processEmail = async (obj) => {
   //create a transporter
-  const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_SMTP,
-    port: process.env.EMAIL_PORT,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
+  try {
+    const transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_SMTP,
+      port: process.env.EMAIL_PORT,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
 
-  const info = await transporter.sendMail({
-    from: `"Team Financial Tracker" <${process.env.EMAIL_USER}>`,
-    ...obj,
-  });
-  console.log("Message sent: %s", info.messageId);
+    const info = await transporter.sendMail({
+      from: `"Team Financial Tracker" <${process.env.EMAIL_USER}>`,
+      ...obj,
+    });
+    console.log("Message sent: %s", info.messageId);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 //create email body
