@@ -15,7 +15,6 @@ const Auth = ({ children }) => {
         //navigate to login
         <Navigate to="/login" replace state={{ from: location }} />
       )}
-      ;
     </>
   );
 };
