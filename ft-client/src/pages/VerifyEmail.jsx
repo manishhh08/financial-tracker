@@ -1,8 +1,8 @@
 import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { verifyUser } from "../utils/axiosHelper";
-// import { resendToken, verifyUser } from "../utils/axiosHelper";
+import { verifyUser } from "../utils/axiosHelper.js";
+// import { verifyUser } from "../utils/axiosHelper";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 
@@ -14,7 +14,7 @@ const VerifyEmail = () => {
 
   const handleOnClick = async () => {
     setIsLoading(true);
-    alert("VERIFY");
+    //alert("VERIFY");
     const token = urlParams.get("t");
     console.log(token);
     const email = urlParams.get("email");
@@ -52,7 +52,7 @@ const VerifyEmail = () => {
   useEffect(() => {
     handleOnClick();
   }, []);
-  console.log("VerifyEmail");
+  //console.log("VerifyEmail");
   return (
     <Container className="p-5">
       <Row className="bg-dark p-5 rounded-5">
@@ -63,13 +63,13 @@ const VerifyEmail = () => {
               <Button variant="primary" disabled>
                 <Spinner animation="border" role="status">
                   <span className="visually-hidden">Loading...</span>
-                </Spinner>{" "}
+                </Spinner>
                 Loading...
               </Button>
             ) : (
               <>
                 <Button variant="primary" onClick={handleOnClick}>
-                  Verifiy
+                  Verify
                 </Button>
                 {/* <Button variant="primary" onClick={handleOnResend}>
                   Resend Token

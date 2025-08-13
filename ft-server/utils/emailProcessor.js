@@ -26,12 +26,12 @@ export const processEmail = async (obj) => {
 
 //create email body
 
-export const sendEmailVerificationTemplate = async ({ to, url }) => {
+export const sendEmailVerificationTemplate = async ({ to, url, userName }) => {
   const obj = {
     to,
     subject: "Email Verification",
     text: `Please verify your email by copy and peasting the link to your browser. ${url}`,
-    html: `<h1>Hello and Welcome User</h1>
+    html: `<h1>Welcome ${userName}</h1>
              <br />
     <br /> <br />
     <br />
